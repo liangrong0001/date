@@ -2,7 +2,7 @@
 import { connect } from 'cloudflare:sockets';
 
 let userID = 'liangrong';
-let proxyIP = 'cdn-all.xn--b6gac.eu.org';
+let proxyIP = '5.10.215.26';
 let DNS64Server = '';
 //let sub = '';
 let subConverter = atob('U1VCQVBJLkNNTGl1c3Nzcy5uZXQ=');

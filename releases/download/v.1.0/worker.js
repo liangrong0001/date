@@ -2,7 +2,7 @@
 import { connect } from 'cloudflare:sockets';
 
 let userID = 'liangrong';
-let proxyIP = '168.138.165.174';
+let proxyIP = 'icook.hk';
 let DNS64Server = '';
 //let sub = '';
 let subConverter = atob('U1VCQVBJLkNNTGl1c3Nzcy5uZXQ=');

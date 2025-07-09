@@ -1,0 +1,1 @@
+vless://6fc2c46a-dc92-4e62-8704-8a69c30b5ddf@icook.tw:443?encryption=none&security=tls&type=ws&host=l1.lr0003.dynv6.net&path=%2F%3Fed%3D2560&sni=l1.lr0003.dynv6.net#VLESS-OpenAI

@@ -1,0 +1,26 @@
+export default async function handler(req, res) {
+  const target = "https://your-vps-domain.com"; // 你的真实代理节点域名或IP
+
+  const url = target + req.url.replace("/api/proxy", "");
+  
+  try {
+    const response = await fetch(url, {
+      method: req.method,
+      headers: {
+        ...req.headers,
+        host: new URL(target).host,
+      },
+      body: req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined,
+    });
+
+    res.status(response.status);
+    response.headers.forEach((value, key) => {
+      res.setHeader(key, value);
+    });
+
+    const buffer = await response.arrayBuffer();
+    res.send(Buffer.from(buffer));
+  } catch (err) {
+    res.status(500).send("Proxy Error: " + err.message);
+  }
+}

@@ -1,0 +1,57 @@
+name: Build Obfuscate Panel
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 1 1 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Install dependencies
+        run: |
+          npm install -g javascript-obfuscator
+          sudo apt-get update -y
+          sudo apt-get install -y unzip
+
+      - name: Download latest  worker
+        run: |
+          curl -L -o origin.js \
+            https://raw.githubusercontent.com/liangrong0001/date/refs/heads/main/releases/download/v.3.0/worker.js
+            
+      - name: Obfuscate worker js
+        run: |
+          javascript-obfuscator origin.js --output _worker.js \
+            --compact true \
+            --control-flow-flattening true \
+            --control-flow-flattening-threshold 1 \
+            --dead-code-injection true \
+            --dead-code-injection-threshold 1 \
+            --identifier-names-generator hexadecimal \
+            --rename-globals true \
+            --string-array true \
+            --string-array-encoding 'rc4' \
+            --string-array-threshold 1 \
+            --transform-object-keys true \
+            --unicode-escape-sequence true
+      - name: Commit obfuscated file
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: main
+          commit_message: ':arrow_up: update latest panel'
+          commit_author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+          push_options: '--set-upstream'
